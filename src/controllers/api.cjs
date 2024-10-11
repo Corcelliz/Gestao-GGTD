@@ -71,4 +71,4 @@ async function adicionarProdutoNaTabela() {
   }
 }
 
-window.onload = adicionarProdutoNaTabela; // Carrega os produtos ao carregar a página
+window.onload = adicionarProdutoNaTabela; // Carrega os produtos ao carregar a página do user
