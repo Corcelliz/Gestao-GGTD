@@ -101,7 +101,7 @@ async function selectLogins() {
   return res.rows; // Retorna todos os logins
 }
 
-// Exporta as funções para serem utilizadas em outros módulos
+// Exporta as funções para serem utilizadas em outros módulos existentes
 module.exports = {
   selectCustomers,
   selectCustomer,
