@@ -41,6 +41,13 @@ async function connect() {
 
 connect(); // Chama a função de conexão ao iniciar
 
+// Função para selecionar todos os produtos
+async function selectProducts() {
+  const client = await connect(); // Conecta ao banco
+  const res = await client.query("SELECT * FROM produtos"); // Executa a query de seleção
+  return res.rows; // Retorna todos os produtos
+}
+
 // Função para inserir um produto no banco de dados
 async function insertProduct(nome, descricao, quantidade, preco, categoria) {
   const client = await connect(); // Conecta ao banco
@@ -58,26 +65,7 @@ async function insertProduct(nome, descricao, quantidade, preco, categoria) {
   }
 }
 
-// Função para selecionar todos os produtos
-async function selectProducts() {
-  const client = await connect(); // Conecta ao banco
-  const res = await client.query("SELECT * FROM produtos"); // Executa a query de seleção
-  return res.rows; // Retorna todos os produtos
-}
 
-// Função para selecionar todos os fornecedores
-async function selectCustomers() {
-  const client = await connect(); // Conecta ao banco
-  const res = await client.query("SELECT * FROM fornecedor"); // Executa a query de seleção
-  return res.rows; // Retorna todos os fornecedores
-}
-
-// Função para selecionar um fornecedor específico pelo ID
-async function selectCustomer(id) {
-  const client = await connect(); // Conecta ao banco
-  const res = await client.query("SELECT * FROM fornecedor WHERE ID=$1", [id]); // Executa a query com o ID
-  return res.rows; // Retorna o fornecedor correspondente
-}
 
 // Função para selecionar um usuário pelo email (usado no login)
 async function selectUserByEmail(email) {
@@ -103,8 +91,6 @@ async function selectLogins() {
 
 // Exporta as funções para serem utilizadas em outros módulos existentes
 module.exports = {
-  selectCustomers,
-  selectCustomer,
   insertProduct,
   selectProducts,
   selectUserByEmail,

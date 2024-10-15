@@ -1,8 +1,8 @@
 // require("dotenv").config(); // Descomente para habilitar variáveis de ambiente, se necessário.
-const db = require("./src/config/db.cjs"); // Importa a configuração do banco de dados
+const db = require("./src/config/db.js"); // Importa a configuração do banco de dados
 const cors = require("cors"); // Importa o middleware CORS
-
 const express = require("express");
+
 const app = express();
 
 const port = process.env.PORT || 3000; // Define a porta para o servidor, utilizando a porta da variável de ambiente ou a porta 3000 como padrão
@@ -10,28 +10,17 @@ const port = process.env.PORT || 3000; // Define a porta para o servidor, utiliz
 app.use(express.json()); // Habilita o uso de JSON no corpo das requisições
 app.use(cors()); // Habilita CORS para permitir requisições de diferentes domínios
 
-// Rota principal para testar se o servidor está funcionando
-app.get("/", (req, res) => res.json({ message: "Funcionando!" }));
+
+// Servir o arquivo HTML na rota principal
+app.get("/", (req, res) => {
+  res.json({message: "Ta rolando"});
+});
 
 // Rota para buscar todos os logins cadastrados
 app.get("/logins", async (req, res) => {
   const logins = await db.selectLogins(); // Seleciona todos os logins do banco de dados
   res.json(logins); // Retorna os logins em formato JSON
   console.log(logins); // Exibe os logins no console para debug
-});
-
-// Rota para buscar todos os fornecedores cadastrados
-app.get("/fornecedor", async (req, res) => {
-  const customers = await db.selectCustomers(); // Seleciona todos os fornecedores
-  res.json(customers); // Retorna os fornecedores em formato JSON
-  console.log(customers); // Exibe os fornecedores no console para debug
-});
-
-// Rota para buscar um fornecedor específico pelo ID
-app.get("/fornecedor/:id", async (req, res) => {
-  const customer = await db.selectCustomer(req.params.id); // Seleciona um fornecedor com base no ID passado na URL
-  res.json(customer); // Retorna o fornecedor em formato JSON
-  console.log(customer); // Exibe o fornecedor no console para debug
 });
 
 // Rota para buscar todos os produtos cadastrados
@@ -103,17 +92,6 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Erro ao buscar login:", error); // Exibe erro no console
     return res.status(500).json({ message: "Erro no servidor" }); // Retorna erro ao cliente
-  }
-});
-
-// Rota para buscar todos os usuários da tabela logins
-app.get("/usuarios", async (req, res) => {
-  try {
-    const result = await db.query("SELECT id, nome, email, status FROM logins"); // Consulta todos os usuários
-    res.json(result.rows); // Retorna os usuários em formato JSON
-  } catch (error) {
-    console.error("Erro ao buscar usuários:", error); // Exibe erro no console
-    res.status(500).send("Erro no servidor"); // Retorna erro ao cliente
   }
 });
 
