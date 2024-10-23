@@ -10,23 +10,86 @@
       rel="stylesheet"
     />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap"
+      rel="stylesheet"
+    />
+
     <title>EstoqueDB</title>
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .col-md-8,
+      #form-produto {
+        height: 450px;
+      }
+      .container-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      .container-logo > img {
+        height: 90px;
+      }
+      .bg-dark {
+        width: 100%;
+        background-color: rgb(109, 161, 199) !important;
+      }
+    </style>
   </head>
 
   <body style="background-color: rgb(184, 217, 240)">
+    <!-- Container com Nome da Empresa -->
+    <div class="container container-logo">
+      <img src="img/Login-img.png" alt="" />
+      <div>
+        <h1
+          style="
+            text-align: center;
+            font-family: 'Afacad Flux', sans-serif;
+            font-size: 35px;
+            margin: 0;
+          "
+        >
+          GAGTD
+        </h1>
+        <small>Software Company</small>
+      </div>
+    </div>
     <!-- Container Principal -->
     <div class="container mt-5">
       <div class="row">
         <!-- Coluna para o Formulário de Cadastro de Produtos -->
         <div class="col-md-4">
-          <h2>Cadastro de Produto</h2>
+          <h2 style="text-align: center">Cadastro de Produto</h2>
 
           <!-- Formulário de Produto -->
           <form id="form-produto" class="needs-validation" novalidate>
             <!-- Campo: Nome do Produto -->
             <div class="mb-3">
-              <label for="nome" class="form-label">Nome:</label>
-              <input type="text" class="form-control" id="nome" required />
+              <input
+                type="text"
+                class="form-control"
+                id="nome"
+                placeholder="Nome:"
+                required
+              />
               <div class="invalid-feedback">
                 Por favor, insira o nome do produto.
               </div>
@@ -34,8 +97,13 @@
 
             <!-- Campo: Descrição do Produto -->
             <div class="mb-3">
-              <label for="descricao" class="form-label">Descrição:</label>
-              <input type="text" class="form-control" id="descricao" required />
+              <input
+                type="text"
+                placeholder="Descrição:"
+                class="form-control"
+                id="descricao"
+                required
+              />
               <div class="invalid-feedback">
                 Por favor, insira uma descrição.
               </div>
@@ -43,12 +111,12 @@
 
             <!-- Campo: Quantidade do Produto -->
             <div class="mb-3">
-              <label for="quantidade" class="form-label">Quantidade:</label>
               <input
                 type="number"
                 class="form-control"
                 id="quantidade"
                 required
+                placeholder="Quantidade:"
               />
               <div class="invalid-feedback">
                 Por favor, insira a quantidade.
@@ -57,8 +125,8 @@
 
             <!-- Campo: Preço do Produto -->
             <div class="mb-3">
-              <label for="preco" class="form-label">Preço:</label>
               <input
+                placeholder="Preço:"
                 type="number"
                 class="form-control"
                 id="preco"
@@ -70,8 +138,13 @@
 
             <!-- Campo: Categoria do Produto -->
             <div class="mb-3">
-              <label for="categoria" class="form-label">Categoria:</label>
-              <input type="text" class="form-control" id="categoria" required />
+              <input
+                type="text"
+                placeholder="Categoria:"
+                class="form-control"
+                id="categoria"
+                required
+              />
               <div class="invalid-feedback">Por favor, insira a categoria.</div>
             </div>
 
@@ -84,7 +157,7 @@
 
         <!-- Coluna para a Tabela de Produtos -->
         <div class="col-md-8">
-          <h2>Lista de Produtos</h2>
+          <h2 style="text-align: center">Lista de Produtos</h2>
 
           <!-- Tabela de Produtos -->
           <table class="table table-striped" id="tabela-produtos">
@@ -104,6 +177,13 @@
         </div>
       </div>
     </div>
+    <footer class="bg-dark text-light py-3">
+      <div class="container text-center">
+        <p class="mb-0">
+          &copy; 2024 GAGTD <i><small>Software Company</small></i>. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
 
     <!-- Scripts Externos -->
     <script src="/index.js"></script>
@@ -114,5 +194,4 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
-  
 </html>

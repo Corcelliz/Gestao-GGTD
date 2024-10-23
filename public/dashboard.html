@@ -16,6 +16,17 @@
 
     <!-- Estilos customizados -->
     <link rel="stylesheet" href="./css/dashboard.css" />
+    <style>
+      .container-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      .container-logo > img {
+        height: 90px;
+      }
+    </style>
   </head>
   <body>
     <!-- Container principal que engloba todo o layout -->
@@ -44,6 +55,23 @@
           class="col-md-9 ms-sm-auto col-lg-10 px-md-4"
           style="background-color: rgb(184, 217, 240)"
         >
+          <!-- Container com Nome da Empresa -->
+          <div class="container container-logo">
+            <img src="img/Login-img.png" alt="" />
+            <div>
+              <h1
+                style="
+                  text-align: center;
+                  font-family: 'Afacad Flux', sans-serif;
+                  font-size: 35px;
+                  margin: 0;
+                "
+              >
+                GAGTD
+              </h1>
+              <small>Software Company</small>
+            </div>
+          </div>
           <!-- Título da página -->
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
@@ -69,6 +97,14 @@
             </table>
           </div>
         </main>
+        <footer class="bg-dark text-light py-3">
+          <div class="container text-center">
+            <p class="mb-0">
+              &copy; 2024 GAGTD <i><small>Software Company</small></i
+              >. Todos os direitos reservados.
+            </p>
+          </div>
+        </footer>
       </div>
     </div>
 
@@ -105,5 +141,4 @@
       window.onload = carregarUsuarios;
     </script>
   </body>
-  
 </html>
