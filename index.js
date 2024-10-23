@@ -23,6 +23,38 @@ app.get("/logins", async (req, res) => {
   console.log(logins); // Exibe os logins no console para debug
 });
 
+// Rota para autenticação de login
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body; // Obtém os dados de login do corpo da requisição
+
+  // Verifica se todos os campos foram preenchidos
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ message: "Por favor, preencha todos os campos" });
+  }
+
+  try {
+    const user = await db.selectUserByEmail(email); // Seleciona o usuário pelo email
+
+    // Verifica se o usuário existe e se a senha está correta
+    if (!user || user.password !== password) {
+      return res.status(401).json({ message: "Credenciais inválidas" });
+    }
+
+    // Verifica o status do usuário (admin ou user)
+    const userStatus = user.status; // Utiliza a coluna 'status' para identificar o tipo de usuário
+    console.log("Status do usuário:", userStatus); // Exibe o status no console para debug
+
+    return res
+      .status(200)
+      .json({ message: "Login bem-sucedido", status: userStatus }); // Retorna sucesso com o status do usuário
+  } catch (error) {
+    console.error("Erro ao buscar login:", error); // Exibe erro no console
+    return res.status(500).json({ message: "Erro no servidor" }); // Retorna erro ao cliente
+  }
+});
+
 // Rota para buscar todos os produtos cadastrados
 app.get("/produtos", async (req, res) => {
   try {
@@ -60,38 +92,6 @@ app.post("/produtos", async (req, res) => {
     res
       .status(500)
       .json({ message: "Erro ao adicionar produto no banco de dados." }); // Retorna erro ao cliente
-  }
-});
-
-// Rota para autenticação de login
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body; // Obtém os dados de login do corpo da requisição
-
-  // Verifica se todos os campos foram preenchidos
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "Por favor, preencha todos os campos" });
-  }
-
-  try {
-    const user = await db.selectUserByEmail(email); // Seleciona o usuário pelo email
-
-    // Verifica se o usuário existe e se a senha está correta
-    if (!user || user.password !== password) {
-      return res.status(401).json({ message: "Credenciais inválidas" });
-    }
-
-    // Verifica o status do usuário (admin ou user)
-    const userStatus = user.status; // Utiliza a coluna 'status' para identificar o tipo de usuário
-    console.log("Status do usuário:", userStatus); // Exibe o status no console para debug
-
-    return res
-      .status(200)
-      .json({ message: "Login bem-sucedido", status: userStatus }); // Retorna sucesso com o status do usuário
-  } catch (error) {
-    console.error("Erro ao buscar login:", error); // Exibe erro no console
-    return res.status(500).json({ message: "Erro no servidor" }); // Retorna erro ao cliente
   }
 });
 
