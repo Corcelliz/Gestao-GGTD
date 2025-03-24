@@ -89,10 +89,17 @@ async function selectLogins() {
   return res.rows; // Retorna todos os logins
 }
 
+async function deleteProduct(id) {
+  const client = await connect();
+  const query = "DELETE FROM produtos WHERE id = $1"; // A consulta SQL para deletar o produto
+  return await await client.query(query, [id]); // Executa a consulta e retorna o resultado
+}
+
 // Exporta as funções para serem utilizadas em outros módulos existentes
 module.exports = {
   insertProduct,
   selectProducts,
   selectUserByEmail,
   selectLogins,
+  deleteProduct,
 };

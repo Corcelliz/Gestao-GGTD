@@ -43,32 +43,62 @@ document
 
 async function adicionarProdutoNaTabela() {
   try {
-    const response = await fetch("http://localhost:3000/produtos"); // Faz a requisição ao back-end
+    const response = await fetch("http://localhost:3000/produtos");
+
     if (!response.ok) {
-      throw new Error("Erro ao buscar produtos do banco de dados");
+      throw new Error("Erro ao buscar produtos");
     }
 
-    const produtos = await response.json(); // Obtém a lista de produtos do BD
-
+    const produtos = await response.json();
     const tabela = document
       .getElementById("tabela-produtos")
       .getElementsByTagName("tbody")[0];
 
-    // Limpa as linhas antigas da tabela, se necessário
+    // Limpa a tabela antes de adicionar novos produtos
     tabela.innerHTML = "";
 
-    // Itera sobre os produtos retornados e os insere na tabela
-    produtos.forEach((produto) => {
+    produtos.forEach((produto, index) => {
       const novaLinha = tabela.insertRow();
-      novaLinha.insertCell(0).innerText = produto.nome;
-      novaLinha.insertCell(1).innerText = produto.descricao;
-      novaLinha.insertCell(2).innerText = produto.quantidade;
-      novaLinha.insertCell(3).innerText = produto.preco;
-      novaLinha.insertCell(4).innerText = produto.categoria;
+      novaLinha.insertCell(0).innerText = index + 1;
+      novaLinha.insertCell(1).innerText = produto.nome;
+      novaLinha.insertCell(2).innerText = produto.descricao;
+      novaLinha.insertCell(3).innerText = produto.quantidade;
+      novaLinha.insertCell(4).innerText = produto.preco;
+      novaLinha.insertCell(5).innerText = produto.categoria;
+
+      // Criar o botão "Excluir"
+      const btnExcluir = document.createElement("button");
+      btnExcluir.innerText = "Excluir";
+      btnExcluir.className = "btn btn-danger btn-sm";
+      btnExcluir.onclick = () => excluirProduto(produto.id); // Vincula a função de exclusão ao botão
+
+      // Adicionar o botão na célula de ações
+      const cellAcoes = novaLinha.insertCell(6);
+      cellAcoes.appendChild(btnExcluir);
     });
   } catch (error) {
-    console.error("Erro ao adicionar produtos na tabela:", error);
+    console.error("Erro ao carregar produtos:", error);
   }
 }
 
-window.onload = adicionarProdutoNaTabela; // Carrega os produtos ao carregar a página do user
+// Função para excluir o produto
+async function excluirProduto(id) {
+  if (confirm("Tem certeza que deseja excluir este produto?")) {
+    try {
+      const response = await fetch(`http://localhost:3000/produtos/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        alert("Produto excluído com sucesso!");
+        carregarProdutos(); // Recarregar produtos após exclusão
+      } else {
+        alert("Erro ao excluir o produto");
+      }
+    } catch (error) {
+      console.error("Erro ao excluir produto:", error);
+    }
+  }
+}
+
+window.onload = adicionarProdutoNaTabela; // Carrega os produtos ao  a página do user
